@@ -1,11 +1,12 @@
 from flask import Flask,render_template,request
 import pickle
 import numpy as np
+import pandas as pd
 
-popular_df=pickle.load(open('pop.pkl','rb'))
-pt=pickle.load(open('pt.pkl','rb'))
-books=pickle.load(open('books.pkl','rb'))
-similarity_scores=pickle.load(open('similarity.pkl','rb'))
+popular_df=pd.read_pickle("pop.pkl")
+pt=pd.read_pickle("pt.pkl")
+books=pd.read_pickle("books.pkl")
+similarity_scores=pd.read_pickle("similarity.pkl")
 
 app=Flask(__name__)
 
@@ -26,7 +27,6 @@ def recommend_ui():
 def recommend():
     user_input=request.form.get('user_input')
     index = np.where(pt.index==user_input)[0][0]
-
     similar_items = sorted(list(enumerate(similarity_scores[index])),key=lambda x:x[1],reverse=True)[1:5]
     
     data = []
@@ -41,6 +41,6 @@ def recommend():
     # print(data)
     return render_template('recommend.html',data=data)
 
+
 # if(__name__=='__main__'):
 #     app.run(debug=True)
-
