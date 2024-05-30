@@ -38,7 +38,9 @@ def recommend():
         item.extend(list(temp_df.drop_duplicates('Book-Title')['Image-URL-M'].values))
         
         data.append(item)
-    print(data)
+    # print(data)
     return render_template('recommend.html',data=data)
 
+# if(__name__=='__main__'):
+#     app.run(debug=True)
 
